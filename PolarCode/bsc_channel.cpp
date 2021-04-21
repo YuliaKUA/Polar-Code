@@ -8,17 +8,12 @@ BscChannel::BscChannel(float BER)
 {
 	BER_ = BER;
 	rand_ = 0;
-
-	//erasure_prob_ = -(BER_ * log(BER_) - (1.0 - BER_) * log(1.0 - BER_));  // используем двоичную функцию энтропии H для нахождения емкости
-	                                                                       // 1 - H
-	//std::cout << erasure_prob_;
 }
 
 BscChannel::BscChannel()
 {
 	BER_ = 0;
 	rand_ = 0;
-	//erasure_prob_ = 0;
 }
 
 BscChannel::~BscChannel()
@@ -33,7 +28,6 @@ BscChannel& BscChannel::operator=(BscChannel& right)
 
 	BER_ = right.BER_;
 	rand_ = right.rand_;
-	//erasure_prob_ = right.erasure_prob_;
 	return *this;
 
 }
