@@ -1,0 +1,13 @@
+﻿  polar_code.cpp
+C:\Project\PolarCode cpp\PolarCode\polar_code.cpp(12,10): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Project\PolarCode cpp\PolarCode\polar_code.cpp(37,10): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Project\PolarCode cpp\PolarCode\polar_code.cpp(175,11): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Project\PolarCode cpp\PolarCode\polar_code.cpp(253,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode cpp\PolarCode\polar_code.cpp(261,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode cpp\PolarCode\polar_code.cpp(313,11): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Project\PolarCode cpp\PolarCode\polar_code.cpp(335,19): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Project\PolarCode cpp\PolarCode\polar_code.cpp(381,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode cpp\PolarCode\polar_code.cpp(389,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode cpp\PolarCode\polar_code.cpp(407,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode cpp\PolarCode\polar_code.cpp(408,21): warning C4018: <: несоответствие типов со знаком и без знака
+  PolarCode.vcxproj -> C:\Project\PolarCode cpp\Debug\PolarCode.exe
