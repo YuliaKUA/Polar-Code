@@ -321,6 +321,18 @@ void PolarCode::receive_likelihoods(const std::vector<double>& likelihoods)
 	likelihoods_ = likelihoods;
 }
 
+int& PolarCode::get_N()
+{
+	return N_;
+}
+
+std::vector<int>& PolarCode::get_info_bit_position()
+{
+	return info_bits_positions_;
+}
+
+
+
 void PolarCode::bit_reversed()
 {
 	int result = 0;
@@ -487,4 +499,33 @@ void PolarCode::print(std::vector<std::vector<double>>& vec) {
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;
+}
+
+
+PolarCode& PolarCode::operator=(PolarCode& right)
+{
+	if (this == &right) {
+		return *this;
+	}
+
+	n_ = right.n_;                                       
+	K_ = right.K_;                                   
+	N_ = right.N_;     
+
+	channel_ = right.channel_;
+	channel_awgn_ = right.channel_awgn_;
+
+	info_bits_positions_ = right.info_bits_positions_;         
+	frozen_bits_positions_ = right.frozen_bits_positions_;       
+
+	bhatt_z_array_ = right.bhatt_z_array_;
+	bhatt_z_array_non_rec_ = right.bhatt_z_array_non_rec_;
+	bhatt_z_array_index_ = right.bhatt_z_array_index_;
+
+	u_message_ = right.u_message_;
+	x_message_ = right.x_message_;
+
+	curr_ber_ = right.curr_ber_;
+
+	return *this;
 }

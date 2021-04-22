@@ -16,6 +16,9 @@ AwgnBpskChannel::AwgnBpskChannel(const double &SINR, const int& n, const int& K)
 
 	BER_ = (1 - erf(sqrt(SINR_))) / 2;
 
+	one_LLR_ = log(BER_ / (1 - BER_));
+	zero_LLR_ = log((1 - BER_) / BER_);
+
 	get_normalised_SINR(n, K);
 }
 
@@ -44,23 +47,24 @@ double AwgnBpskChannel::get_ber()
 
 std::vector<int> AwgnBpskChannel::modulate(std::vector<int>& message)
 {
-	/*for (int i = 0; i < message.size(); i++) {
+	//для scd class
+	for (int i = 0; i < message.size(); i++) {
 		if (message[i] == 0) {
 			message[i] = 1;
 		}
 		else {
 			message[i] = -1;
 		}
-	}*/
+	}
 
-	for (int i = 0; i < message.size(); i++) {
+	/*for (int i = 0; i < message.size(); i++) {
 		if (message[i] == 0) {
 			message[i] += sqrt(norm_sinr_);
 		}
 		else {
 			message[i] -= sqrt(norm_sinr_);
 		}
-	}
+	}*/
 
 	return message;
 }
@@ -108,6 +112,11 @@ std::vector<int> AwgnBpskChannel::demodulate(std::vector<double>& message)
 std::vector<double> AwgnBpskChannel::get_likelihoods()
 {
 	return likelihoods_;
+}
+
+long double AwgnBpskChannel::get_llr(int & symb)
+{
+	return (symb == 1 ? one_LLR_ : zero_LLR_);
 }
 
 double AwgnBpskChannel::LLR(double y)           //LLR = Pr(y = 0) / Pr(y = 1)

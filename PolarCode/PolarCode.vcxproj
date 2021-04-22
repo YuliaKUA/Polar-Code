@@ -143,12 +143,14 @@
     <ClCompile Include="bsc_channel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="polar_code.cpp" />
+    <ClCompile Include="sc_decode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="awgn_bpsk_channel.h" />
     <ClInclude Include="bsc_channel.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="polar_code.h" />
+    <ClInclude Include="sc_decode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

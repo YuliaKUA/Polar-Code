@@ -18,11 +18,15 @@ public:
 
 	std::vector<double> get_likelihoods();
 
+	long double get_llr(int &symb);
 
 private:
 	double SINR_;
 	double SINR_db_;
 	double BER_;
+
+	long double zero_LLR_;
+	long double one_LLR_;
 
 	double norm_sinr_;
 

@@ -9,6 +9,7 @@
 #include "bsc_channel.h"
 #include "awgn_bpsk_channel.h"
 #include "polar_code.h"
+#include "sc_decode.h"
 
 #include <vector>
 
@@ -59,7 +60,9 @@ int main() {
 
     //Декодируем наше сообщение
     std::cout << "Decode message: ";
-    std::vector<int> decode_message = code.decode(demodulate_message);
+    //std::vector<int> decode_message = code.decode(demodulate_message);
+    SCdecode decode(code);
+    std::vector<int> decode_message = decode.decode(demodulate_message);
     print(decode_message);
 
     //Проверка

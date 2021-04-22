@@ -12,9 +12,7 @@ private:
 	int n_;                                        //целочисленный показатель, который определяет длину кодового слова (N = 2^n)
 	int K_;                                        //число информационных битов
 	int N_;                                        //длина кодового слова
-	
-	BscChannel channel_;
-	AwgnBpskChannel channel_awgn_;
+
 	
 	std::vector<int> info_bits_positions_;         //вектор информационных битовых индексов в кодовом слове
 	std::vector<int> frozen_bits_positions_;       //вектор индексов замороженных битов (равных 0) в кодовом слове
@@ -75,10 +73,17 @@ public:
 	PolarCode();
 	PolarCode(int& n, int& K, BscChannel& channel);
 	PolarCode(int& n, int& K, AwgnBpskChannel& channel);
+
+	BscChannel channel_;
+	AwgnBpskChannel channel_awgn_;
 	
 	~PolarCode();
 	std::vector<int> encode(std::vector<int>& message);
 	std::vector<int> decode(std::vector<int>& message);
 
 	void receive_likelihoods(const std::vector<double>& likelihoods);
+	int &get_N();
+	std::vector<int>& get_info_bit_position();
+
+	PolarCode& operator= (PolarCode& right);
 };
