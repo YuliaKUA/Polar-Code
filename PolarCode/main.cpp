@@ -20,7 +20,7 @@ int main() {
     
     //создаем экземпляр базового канала
     //BscChannel channel(0.1);
-    AwgnBpskChannel channel_awgn(5.0);
+    AwgnBpskChannel channel_awgn(5.0, 8, 10);
 
     //Мы определяем основные параметры кода: длину кодового слова и количество информационных битов.
     //Затем мы создаем экземпляр кода, используя метод построения, метод построения, DBEC(Dependent Binary Erasure Channel construction),
@@ -60,9 +60,10 @@ int main() {
     //Декодируем наше сообщение
     std::cout << "Decode message: ";
     std::vector<int> decode_message = code.decode(demodulate_message);
+    print(decode_message);
 
     //Проверка
-    std::cout << "Is Equal: " << ((encode_message == decode_message)? "yes" : "no" ) << std::endl;
+    std::cout << "Is Equal: " << ((message == decode_message)? "yes" : "no" ) << std::endl;
     
     system("pause");
     return 0;

@@ -56,10 +56,17 @@ private:
 	double lower_llr(double &l1, double &l2, int& b);
 
 	void update_bits(int& l);
+	int active_bit_level(int& i);
+
+	void form_B();
+	std::vector<int> form_B_;
+	void form_message_received();
+	std::vector<int> message_received_;
 
 	void sort();
 	void print(std::vector<double>& vec);
 	void print(std::vector<int>& vec);
+	void printf(std::vector<int>& vec);
 	void print(std::vector<std::vector<double>>& vec);
 	void print(double x);
 	void print(int x);

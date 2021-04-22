@@ -8,13 +8,15 @@ AwgnBpskChannel::AwgnBpskChannel()
 {
 }
 
-AwgnBpskChannel::AwgnBpskChannel(double SINR)
+AwgnBpskChannel::AwgnBpskChannel(const double &SINR, const int& n, const int& K)
 {
 	SINR_ = pow(10, SINR/10);    //SINR = 10*log10(A) Да
 
 	SINR_db_ = SINR;
 
 	BER_ = (1 - erf(sqrt(SINR_))) / 2;
+
+	get_normalised_SINR(n, K);
 }
 
 AwgnBpskChannel::~AwgnBpskChannel()
@@ -42,36 +44,47 @@ double AwgnBpskChannel::get_ber()
 
 std::vector<int> AwgnBpskChannel::modulate(std::vector<int>& message)
 {
-	for (int i = 0; i < message.size(); i++) {
+	/*for (int i = 0; i < message.size(); i++) {
 		if (message[i] == 0) {
 			message[i] = 1;
 		}
 		else {
 			message[i] = -1;
 		}
+	}*/
+
+	for (int i = 0; i < message.size(); i++) {
+		if (message[i] == 0) {
+			message[i] += sqrt(norm_sinr_);
+		}
+		else {
+			message[i] -= sqrt(norm_sinr_);
+		}
 	}
+
 	return message;
 }
 
 std::vector<double> AwgnBpskChannel::transmit(std::vector<int>& message, int& n, int& K)
 {
-	get_normalised_SINR(n, K);
 	
 	double noise_std = 1 / sqrt(2 * SINR_);
 	
 	std::default_random_engine generator;
-	std::normal_distribution<double> distribution(0.0, 2.0);
+	std::normal_distribution<double> distribution(0.0, 1.0);
 
 	for (int i = 0; i < message.size(); i++) {
 		transmit_.push_back(distribution(generator) * noise_std);
 	}
 	
-	get_likelihoods(transmit_.size());
+	//get_likelihoods(transmit_.size());
 	//print(likelihoods_);
 
 	for (int i = 0; i < message.size(); i++) {
 		transmit_[i] += message[i];
 	}
+
+	get_likelihoods(transmit_.size());
 	//print(transmit_);
 
 	return transmit_;
@@ -109,7 +122,7 @@ void AwgnBpskChannel::get_likelihoods(int len)
 	}
 }
 
-void AwgnBpskChannel::get_normalised_SINR(int& n, int& K)
+void AwgnBpskChannel::get_normalised_SINR(const int& n, const int& K)
 {
 	norm_sinr_ = SINR_ * K / pow(2, n);
 	//print(norm_sinr_);

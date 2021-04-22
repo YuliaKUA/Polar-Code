@@ -4,7 +4,7 @@
 class AwgnBpskChannel {
 public:
 	AwgnBpskChannel();
-	AwgnBpskChannel(double SINR);
+	AwgnBpskChannel(const double& SINR, const int& n, const int& K);
 
 	~AwgnBpskChannel();
 
@@ -35,7 +35,7 @@ private:
 	std::vector<double> likelihoods_;
 	void get_likelihoods(int len);
 
-	void get_normalised_SINR(int& n, int& K);
+	void get_normalised_SINR(const int& n, const int& K);
 
 	void print(std::vector<double>& vec);
 	void print(double x);
