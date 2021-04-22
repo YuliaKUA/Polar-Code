@@ -55,22 +55,22 @@ long double SCdecode::slow_llr(int i, int N, std::vector<int> y, std::vector<int
 			copy(y.end() - y.size() / 2, y.end(), back_inserter(temp_message));
 
 
-			llr_1 = slow_llr(i / 2, N / 2, temp_message, (u_est[::2] ^ u_est[1::2])[:(i / 2)]);
+			llr_1 = slow_llr(i / 2, N / 2, temp_message, u_est);
 
 			temp_message.clear();
 			copy(y.begin() + y.size() / 2, y.end(), back_inserter(temp_message));
-			llr_2 = slow_llr(i / 2, N / 2, temp_message, u_est[1::2][:(i / 2)]);
+			llr_2 = slow_llr(i / 2, N / 2, temp_message, u_est);
 
 
 			llr = llr_check_node_operation(llr_1, llr_2);
 		}
 		else {
 			copy(y.end() - y.size() / 2, y.end(), back_inserter(temp_message));
-			llr_1 = slow_llr((i - 1) / 2, N / 2, temp_message, (u_est[:-1 : 2] ^ u_est[1:-1 : 2])[:(i - 1 / 2)]);
+			llr_1 = slow_llr((i - 1) / 2, N / 2, temp_message, u_est);
 
 			temp_message.clear();
 			copy(y.begin() + y.size() / 2, y.end(), back_inserter(temp_message));
-			llr_2 = slow_llr((i - 1) / 2, N / 2, temp_message, u_est[1::2][:((i - 1) / 2)]);
+			llr_2 = slow_llr((i - 1) / 2, N / 2, temp_message, u_est);
 
 
 			llr = llr_2 + pow(-1, u_est[u_est.size() - 1]) * llr_1;
