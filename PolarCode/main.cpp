@@ -21,7 +21,7 @@ int main() {
     
     //создаем экземпляр базового канала
     //BscChannel channel(0.1);
-    AwgnBpskChannel channel_awgn(5.0, 8, 10);
+    AwgnBpskChannel channel_awgn(-1.0, 8, 10);
 
     //Мы определяем основные параметры кода: длину кодового слова и количество информационных битов.
     //Затем мы создаем экземпляр кода, используя метод построения, метод построения, DBEC(Dependent Binary Erasure Channel construction),
@@ -44,7 +44,7 @@ int main() {
     //кодируем наше сообщение (применяем к нему полярное преобразование)
     std::vector<int> encode_message = code.encode(message);
     std::cout << "Encode message:   ";
-    print(encode_message);
+    printd(encode_message);
 
     //передаем сообщение по каналу
     //модулирем/демодулируем
@@ -55,8 +55,8 @@ int main() {
     code.receive_likelihoods(channel_awgn.get_likelihoods());
 
     std::cout << "Transmit message: ";
-    print(demodulate_message);
-    std::cout << "Is Equal: " << ((encode_message == demodulate_message) ? "yes" : "no") << std::endl;
+    printd(demodulate_message);
+    std::cout << "Is Equal (encode and demodulate): " << ((encode_message == demodulate_message) ? "yes" : "no") << std::endl;
 
     //Декодируем наше сообщение
     std::cout << "Decode message: ";
@@ -66,8 +66,11 @@ int main() {
     print(decode_message);
 
     //Проверка
-    std::cout << "Is Equal: " << ((message == decode_message)? "yes" : "no" ) << std::endl;
+    std::cout << "Is Equal(orig message and decode message): " << ((message == decode_message)? "yes" : "no" ) << std::endl;
     
+
+    print(code.get_info_bit_position());
+
     system("pause");
     return 0;
 }
