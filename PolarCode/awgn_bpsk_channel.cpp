@@ -78,7 +78,7 @@ std::vector<double> AwgnBpskChannel::transmit(std::vector<int>& message, int& n,
 	double noise_std = 1 / sqrt(2 * SINR_);
 	
 	std::default_random_engine generator;
-	std::normal_distribution<double> distribution(0.0, 3.0);
+	std::normal_distribution<double> distribution(0.0, 2.0);
 
 	for (int i = 0; i < message.size(); i++) {
 		transmit_.push_back(distribution(generator) * noise_std);

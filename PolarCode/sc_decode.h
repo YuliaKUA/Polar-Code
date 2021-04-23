@@ -23,8 +23,6 @@ private:
 	long double slow_llr(int i, int N, std::vector<int> y, std::vector<int> u_est);
 	long double llr_check_node_operation(long double& llr_1, long double& llr_2);
 
-	int CHECK_NODE_TANH_THRES = 44;
-
 	void print(long double p);
 	void print(std::vector<int> vec);
 };

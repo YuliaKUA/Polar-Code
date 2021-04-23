@@ -25,7 +25,7 @@ void printp(std::vector<int>& vec) {
 
 void printd(std::vector<int>& vec) {
 	for (int i = 0; i < vec.size(); i++) {
-		std::cout << " " << i << " " << vec[i] << "  ";
+		std::cout << " " << i << ":" << vec[i] << "  ";
 	}
 	std::cout << std::endl;
 }

@@ -125,17 +125,11 @@ long double SCdecode::slow_llr(int i, int N, std::vector<int> y, std::vector<int
 
 long double SCdecode::llr_check_node_operation(long double& llr_1, long double& llr_2)
 {
-	//приближение не обязательно
-	if (abs(llr_1) > CHECK_NODE_TANH_THRES && abs(llr_2) > CHECK_NODE_TANH_THRES) {
-		if (llr_1 * llr_2 > 0) {
-			return std::min(abs(llr_1), abs(llr_2));
-		}
-		else {
-			return -1 * std::min(abs(llr_1), abs(llr_2));
-		}
+	if (llr_1 * llr_2 > 0) {
+		return std::min(abs(llr_1), abs(llr_2));
 	}
 	else {
-		return 2 * atanh(tanh(llr_1 / 2) * tanh(llr_2 / 2));
+		return -1 * std::min(abs(llr_1), abs(llr_2));
 	}
 }
 
