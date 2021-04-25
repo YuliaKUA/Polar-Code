@@ -137,8 +137,7 @@ void PolarCode::sort()
 }
 
 //Рекурсивно вычисляется значение Z - параметра Бхаттачарьи для i - го из N поляризованных каналов.
-//Расчет основан на соотношениях, полученных в оригинальной работе Арикана.
-//исправить -> 1 раз считать (z)^2
+//Расчет основан на соотношениях, полученных в оригинальной работе Арикана
 double PolarCode::bhatt_z(int i, int N)
 {
 
@@ -163,6 +162,9 @@ double PolarCode::bhatt_z(int i) {
 	return bhatt_z_array_non_rec_[i];
 }
 
+//Не рекурсивное вычисление значения Z - параметра Бхаттачарьи для i - го из N поляризованных каналов
+//Инициализация массива bhatt_z_array_non_rec_
+//пересчитать для О(n)
 void PolarCode::init_bhat_non_rec()
 {
 	int N = 0;
@@ -222,7 +224,7 @@ std::vector<int> PolarCode::encode(std::vector<int>& message)
 	return x_message_;
 }
 
-
+//Чередует K информационных битов с замороженными битами таким образом, что получается u_message.
 void PolarCode::extend_info_bits(std::vector<int>& info_bits)
 {
 	if (info_bits.size() != K_) {
@@ -269,7 +271,7 @@ std::vector<int> PolarCode::polar_transform(std::vector<int> u_message)
 	return x_message;
 }
 
-
+// scd алгоритм декодирования
 std::vector<int> PolarCode::decode(std::vector<int>& message)
 {
 	for (int i = 0; i < N_; i++) {
@@ -332,7 +334,7 @@ std::vector<int>& PolarCode::get_info_bit_position()
 }
 
 
-
+//функция реверсирования битов
 void PolarCode::bit_reversed()
 {
 	int result = 0;
@@ -349,6 +351,7 @@ void PolarCode::bit_reversed()
 	//print(bit_reversed_);
 }
 
+//Находим первую 1 в двоичном разложении i
 int PolarCode::active_llr_level(int& l)
 {
 	int mask = pow(2, (n_ - 1));
@@ -392,6 +395,7 @@ void PolarCode::update_llrs(int& l)
 	}
 }
 
+//Обновляем верхнюю ветвь LLR
 double PolarCode::upper_llr(double& l1, double& l2)
 {
 	return logdomain_sum(l1 + l2, 0) - logdomain_sum(l1, l2);
@@ -407,6 +411,7 @@ double PolarCode::logdomain_sum(const double& x, const double& y)
 	}
 }
 
+//Обновляем нижнюю ветвь LLR
 double PolarCode::lower_llr(double& l1, double& l2, int& b)
 {
 	if (b == 0) {                                              
@@ -438,6 +443,7 @@ void PolarCode::update_bits(int& l)
 	
 }
 
+// Находим первый 0 в двоичном разложении i
 int PolarCode::active_bit_level(int& i)
 {
 	int mask = pow(2, (n_ - 1));
@@ -455,6 +461,7 @@ int PolarCode::active_bit_level(int& i)
 }
 
 
+//Функции вывода
 void PolarCode::print(std::vector<double>& vec){
 	std::cout << std::endl;
 	for (int i = 0; i < vec.size(); i++) {

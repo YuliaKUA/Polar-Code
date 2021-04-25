@@ -51,7 +51,7 @@ int main() {
     //передаем сообщение по каналу
     //модулирем/демодулируем
     std::vector<int> modulate_message = channel_awgn.modulate(encode_message);
-    std::vector<double> transmit_message = channel_awgn.transmit(modulate_message, n, K);
+    std::vector<double> transmit_message = channel_awgn.transmit(modulate_message);
     std::vector<int> demodulate_message = channel_awgn.demodulate(transmit_message);
 
     code.receive_likelihoods(channel_awgn.get_likelihoods());

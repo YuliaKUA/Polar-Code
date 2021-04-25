@@ -17,13 +17,14 @@ private:
 	std::vector<int> info_bits_positions_;         //вектор информационных битовых индексов в кодовом слове
 	std::vector<int> frozen_bits_positions_;       //вектор индексов замороженных битов (равных 0) в кодовом слове
 	
-	std::vector<double> bhatt_z_array_;
-	std::vector<double> bhatt_z_array_non_rec_;
-	std::vector<int> bhatt_z_array_index_;
+	std::vector<double> bhatt_z_array_;            //вектор вычисленных параметров Ѕхаттачарьи
+	std::vector<double> bhatt_z_array_non_rec_;    //вектор вычисленных параметров Ѕхаттачарьи (дл€ не рекурсивного метода)
+	std::vector<int> bhatt_z_array_index_;         //вектор индексов дл€ вычисленных параметров Ѕхаттачарьи
 
-	std::vector<int> u_message_;
-	std::vector<int> x_message_;
+	std::vector<int> u_message_;                   //дл€ polar_transform (на позиции info_bits_positions_ устанавливаем значени€ info_bits)
+	std::vector<int> x_message_;                   //закодированное сообщение
 
+	//дл€ scd декодера
 	std::vector<std::vector<int>> B_;
 	std::vector<std::vector<double>> L_;
 	std::vector<double> likelihoods_;
@@ -41,7 +42,7 @@ private:
 	std::vector<int> polar_transform(std::vector<int> u_message);
 
 	void bit_reversed();
-	std::vector<int> bit_reversed_;
+	std::vector<int> bit_reversed_;                // вектор реверсированных битов
 
 	void update_llrs(int &l);
 	int active_llr_level(int& l);

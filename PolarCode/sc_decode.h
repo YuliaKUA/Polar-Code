@@ -1,6 +1,8 @@
 #pragma once
 #include "polar_code.h"
 
+// –еализует декодер последовательной отмены(SC), описанный јриканом
+// ¬ частности, он вычисл€ет LLR дл€ каждого пол€ризованного канала и сравнивает его с нулем
 class SCdecode {
 public:
 	SCdecode();
@@ -10,19 +12,21 @@ public:
 	std::vector<int> decode(std::vector<int>& message);
 
 private:
-	PolarCode code_;
+	PolarCode code_;                                
 
-	std::vector<int> u_est_;
-	std::vector<int> info_bit_position_;
-	int N_;
+	std::vector<int> u_est_;                        // целочисленный вектор ранее декодированных битов
+	std::vector<int> info_bit_position_;            // вектор информационных битовых индексов в кодовом слове
+	int N_;                                         // длина кодового слова
 
-	std::vector<int> message_;
-	std::vector<int> message_received_;
-	std::vector<long double> llrs_;
+	std::vector<int> message_received_;             // декодированное сообшение
+	//–екурсивные отношени€ алгоритмов в пол€рном кодировании требуют, чтобы мы работали в log-domain, чтобы избежать ошибок переполнени€ в их реализаци€х.
+	std::vector<long double> llrs_;                 // вектор LLR
 
-	long double slow_llr(int i, int N, std::vector<int> y, std::vector<int> u_est);
+	long double recursive_llr(int i, int N, std::vector<int> y, std::vector<int> u_est);
 	long double llr_check_node_operation(long double& llr_1, long double& llr_2);
 
 	void print(long double p);
 	void print(std::vector<int> vec);
+
+	int CHECK_TANH = 40;
 };

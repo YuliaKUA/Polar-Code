@@ -1,7 +1,11 @@
-﻿  awgn_bpsk_channel.cpp
-C:\Project\PolarCode_cpp\PolarCode\awgn_bpsk_channel.cpp(54,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\awgn_bpsk_channel.cpp(83,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\awgn_bpsk_channel.cpp(90,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\awgn_bpsk_channel.cpp(103,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\awgn_bpsk_channel.cpp(147,20): warning C4018: <: несоответствие типов со знаком и без знака
+﻿  sc_decode.cpp
+C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(35,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(48,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(79,22): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(88,26): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(91,22): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(103,22): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(112,26): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(115,22): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(160,20): warning C4018: <: несоответствие типов со знаком и без знака
   PolarCode.vcxproj -> C:\Project\PolarCode_cpp\Debug\PolarCode.exe
