@@ -1,11 +1,6 @@
-﻿  sc_decode.cpp
-C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(35,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(48,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(79,22): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(88,26): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(91,22): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(103,22): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(112,26): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(115,22): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Project\PolarCode_cpp\PolarCode\sc_decode.cpp(160,20): warning C4018: <: несоответствие типов со знаком и без знака
+﻿  main.cpp
+C:\Project\PolarCode_cpp\PolarCode\main.h(6,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode_cpp\PolarCode\main.h(13,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode_cpp\PolarCode\main.h(20,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Project\PolarCode_cpp\PolarCode\main.h(27,20): warning C4018: <: несоответствие типов со знаком и без знака
   PolarCode.vcxproj -> C:\Project\PolarCode_cpp\Debug\PolarCode.exe

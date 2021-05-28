@@ -38,7 +38,7 @@ PolarCode::PolarCode(int& n, int& K, AwgnBpskChannel& channel)
 	N_ = pow(2, n);
 
 	channel_awgn_ = channel;
-	curr_ber_ = channel_awgn_.get_ber();
+	curr_ber_ = channel_awgn_.get_sinr();
 
 	info_bits_positions_.reserve(K_);
 	frozen_bits_positions_.reserve(N_ - K_);

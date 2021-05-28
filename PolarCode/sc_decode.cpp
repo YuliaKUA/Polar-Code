@@ -1,4 +1,5 @@
 #include "sc_decode.h"
+#include "print.h"
 #include <math.h>
 
 SCdecode::SCdecode()
@@ -26,7 +27,7 @@ SCdecode::~SCdecode()
 /* @brief ‘ункци€ декодера последовательной отмены(SC), описанного јриканом
 	* @param message - закодированное смодулированное сообщение
 	* @return - декодированное сообщение*/
-std::vector<int> SCdecode::decode(std::vector<int>& message)
+std::vector<int> SCdecode::decode(std::vector<double>& message)
 {
 	std::vector<int> temp_u_est;
 	double llr = 0;
@@ -45,13 +46,26 @@ std::vector<int> SCdecode::decode(std::vector<int>& message)
 		u_est_[info_bit_position_[i]] = (llr > 0 ? 0 : 1);
 	}
 
-
+	//print(u_est_);
 	//смодулировать выходное сообщение
 	for (int i = 0; i < info_bit_position_.size(); i++) {
 		message_received_.push_back(u_est_[info_bit_position_[i]]);
 	}
 
 	return message_received_;
+}
+
+/* @brief ¬ычисл€ет веро€тности ошибок дл€ построени€ графика*/
+double SCdecode::get_error(std::vector<int>& message, std::vector<int>& decode)
+{
+	double sum = 0;
+	for (int i = 0; i < message.size(); i++) {
+		if (message[i] != decode[i]) {
+			sum++;
+		}
+	}
+
+	return sum/N_;
 }
 
 
@@ -61,9 +75,10 @@ std::vector<int> SCdecode::decode(std::vector<int>& message)
 	* @param y - вектор битов, используемых при декодировании
 	* @param u_est - вектор ранее декодированных битов
 	* @return - двойное значение LLR дл€ текущего пол€ризованного канала*/
-long double SCdecode::recursive_llr(int i, int N, std::vector<int> y, std::vector<int> u_est)
+long double SCdecode::recursive_llr(int i, int N, std::vector<double> y, std::vector<int> u_est)
 {
-	std::vector<int> temp_u_est, temp_message;
+	std::vector<int> temp_u_est;
+	std::vector<double> temp_message;
 	long double llr = 0, llr_1 = 0, llr_2 = 0;
 
 
@@ -150,17 +165,3 @@ long double SCdecode::llr_check_node_operation(long double& llr_1, long double& 
 	}
 }
 
-
-// ‘ункции вывода
-void SCdecode::print(long double p)
-{
-	std::cout << p << std::endl;
-}
-
-void SCdecode::print(std::vector<int> vec)
-{
-	for (int i = 0; i < vec.size(); i++) {
-		std::cout << vec[i] << " ";
-	}
-	std::cout << std::endl;
-}

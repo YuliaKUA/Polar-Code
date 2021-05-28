@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <random>
 
 //Ётот класс имитирует канал AWGN, добавл€€ гауссовский шум
 //+ использует ћодул€цию BPSK дл€ битового пол€
@@ -12,7 +13,8 @@ public:
 
 	AwgnBpskChannel& operator= (AwgnBpskChannel& right);
 
-	double get_ber();
+	double get_sinr();
+	double get_Eb_No();
 
 	std::vector<int> modulate(std::vector<int>& message);
 	std::vector<double> transmit(std::vector<int>& message);
@@ -20,15 +22,17 @@ public:
 
 	std::vector<double> get_likelihoods();
 
-	long double get_llr(int &symb);
+	long double get_llr(double &symb);
 
 private:
 	// «атраты энергии на бит(отношение сигнал/шум SNR?)
 	double SINR_;                       // обратное значение
-	double SINR_db_;                    // при больших отношени€х сигнал/шум пропускна€ способность пропорциональна логарифму  10*log10(A) дЅ  
+	double Es_No;                    // при больших отношени€х сигнал/шум пропускна€ способность пропорциональна логарифму  10*log10(A) дЅ  
+
+	double R_;                          // мощность сигнала сообщени€ R = K / N
 
 	// „астота битовых ошибок
-	double BER_;                        // в случае модул€ции QPSK и канала AWGN BER как функци€ Eb/N0 задаетс€ 1/2 * erfc(sqrt(Eb / No))
+	long double BER_;                        // в случае модул€ции QPSK и канала AWGN BER как функци€ Eb/N0 задаетс€ 1/2 * erfc(sqrt(Eb / No))
 
 
 	long double zero_LLR_;              // значение LLR дл€ тривиального случа€ одного пол€ризованного канала (входной символ 0)
@@ -39,6 +43,11 @@ private:
 	int n_;                             // целочисленный показатель, который определ€ет длину кодового слова (N = 2^n)
 	int K_;                             // число информационных битов
 
+	//дл€ генерации шума
+	double sigma_2_;                    // 2 параметр distribution 
+	std::default_random_engine generator_;
+	std::normal_distribution<double> distribution_;
+
 	std::vector<double> transmit_;      // сообщение после модулировани€ передачи его по каналу
 	double LLR(double y);
 
@@ -46,8 +55,5 @@ private:
 	void get_likelihoods(int len);
 
 	void get_normalised_SINR(const int& n, const int& K);
-
-	void print(std::vector<double>& vec);
-	void print(double x);
 
 };

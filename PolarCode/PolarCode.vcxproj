@@ -143,6 +143,8 @@
     <ClCompile Include="bsc_channel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="polar_code.cpp" />
+    <ClCompile Include="print.cpp" />
+    <ClCompile Include="scl_decode.cpp" />
     <ClCompile Include="sc_decode.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +152,8 @@
     <ClInclude Include="bsc_channel.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="polar_code.h" />
+    <ClInclude Include="print.h" />
+    <ClInclude Include="scl_decode.h" />
     <ClInclude Include="sc_decode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

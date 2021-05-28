@@ -1,4 +1,6 @@
 #include "awgn_bpsk_channel.h"
+#include "print.h"
+
 #include <iostream>
 #include <math.h> 
 #include <random>
@@ -12,18 +14,33 @@ AwgnBpskChannel::AwgnBpskChannel()
 	* @param SINR - конструкци€ SNR в децибелах
 	* @param n - целочисленный показатель, который определ€ет длину кодового слова (N = 2^n)
 	* @param K - число информационных битов */
-AwgnBpskChannel::AwgnBpskChannel(const double &SINR, const int& n, const int& K)
+AwgnBpskChannel::AwgnBpskChannel(const double &Eb_No, const int& n, const int& K)
 {
-	SINR_ = pow(10, SINR/10);    //SNR = 10*log10(A) дЅ
+	R_ = K / pow(2, n);
+	//SINR_ = Eb_No * R_;
 
-	SINR_db_ = SINR;
+	SINR_ = pow(10, Eb_No/10);    //SNR = 10*log10(A) дЅ
 
-	BER_ = (1 - erf(sqrt(SINR_))) / 2;         //см пределы интегрировани€ дл€ erf и erfc(дополнительна€ функци€ ошибок)
+	Es_No = Eb_No * R_;
+	
+	//sigma
+	//gen noize
 
-	one_LLR_ = log(BER_ / (1 - BER_));
-	zero_LLR_ = log((1 - BER_) / BER_);
+	//BER_ = (1 - erf(Eb_No)) / 2;         //см пределы интегрировани€ дл€ erf и erfc(дополнительна€ функци€ ошибок)
 
-	get_normalised_SINR(n, K);
+	//delete
+	//one_LLR_ = log(BER_ / (1 - BER_));
+	//zero_LLR_ = log((1 - BER_) / BER_);
+	
+
+	//get_normalised_SINR(n, K);
+
+	//ƒанна€ функци€ возвращает случайные числа с плавающей точкой, которые выбраны из одномерного нормального (√аусовского) распределени€ 
+	//со средним значением равным 0
+	//2 параметр sqrt(sigma^2)
+	sigma_2_ = 0.5 * (1 / get_Eb_No()) * (1 / R_); //один раз определ€ть
+	std::normal_distribution<double> distribution(0.0, sqrt(sigma_2_));
+	distribution_ = distribution;
 }
 
 AwgnBpskChannel::~AwgnBpskChannel()
@@ -41,7 +58,7 @@ AwgnBpskChannel& AwgnBpskChannel::operator=(AwgnBpskChannel& right)
 
 	BER_ = right.BER_;
 	SINR_ = right.SINR_;
-	SINR_db_ = right.SINR_db_; 
+	Es_No = right.Es_No; 
 	norm_sinr_ = right.norm_sinr_;
 
 	one_LLR_ = right.one_LLR_;
@@ -54,11 +71,16 @@ AwgnBpskChannel& AwgnBpskChannel::operator=(AwgnBpskChannel& right)
 	
 }
 
-/* @brief ¬озвращает значение BER
-	* @return - BER */
-double AwgnBpskChannel::get_ber()
+/* @brief ¬озвращает значение SINR
+	* @return - SINR */
+double AwgnBpskChannel::get_sinr()
 {
-	return BER_;
+	return SINR_;
+}
+
+double AwgnBpskChannel::get_Eb_No()
+{
+	return Es_No / R_;
 }
 
 /* @brief ћодул€ци€ BPSK дл€ битового пол€ - "0" соответствует +1, а "1" -1
@@ -76,17 +98,6 @@ std::vector<int> AwgnBpskChannel::modulate(std::vector<int>& message)
 		}
 	}
 
-	//дл€ scd
-	//"1" соответствует + sqrt(norm_sinr), а "0" - -sqrt(norm_sinr_)
-	/*for (int i = 0; i < message.size(); i++) {
-		if (message[i] == 0) {
-			message[i] += sqrt(norm_sinr_);
-		}
-		else {
-			message[i] -= sqrt(norm_sinr_);
-		}
-	}*/
-
 	return message;
 }
 
@@ -95,23 +106,12 @@ std::vector<int> AwgnBpskChannel::modulate(std::vector<int>& message)
 	* @param message - закодированное смодулированное сообщение
 	* @return - modulate_message + noise */
 std::vector<double> AwgnBpskChannel::transmit(std::vector<int>& message)
-{
-	
-	double noise_std = 1 / sqrt(2 * SINR_);
-	
-	//ƒанна€ функци€ возвращает случайные числа с плавающей точкой, которые выбраны из одномерного нормального (√аусовского) распределени€ 
-	//со средним значением равным 0 и дисперсией равной 2
-	//2 параметр sqrt(sigma^2)
-	std::default_random_engine generator;
-	std::normal_distribution<double> distribution(0.0, 2.0);
+{	
+	print(sqrt(sigma_2_));
 
 	for (int i = 0; i < message.size(); i++) {
-		transmit_.push_back((distribution(generator) * noise_std) + message[i]);
+		transmit_.push_back((distribution_(generator_)) + message[i]);
 	}
-	
-	// дл€ scd декодера
-	//Ќаходим логарифмическое отношение правдоподоби€ (LLR) дл€ модулированного сообщени€
-	get_likelihoods(transmit_.size());
 
 	return transmit_;
 }
@@ -145,9 +145,10 @@ std::vector<double> AwgnBpskChannel::get_likelihoods()
 /* @brief ¬озвращает значени€ LLR дл€ тривиальный случа€ одного пол€ризованного канала. Ѕиту "0" соответствует "zero_LLR", а "1" - "one_LLR"
 	*@param symb - прин€тый сигнал из гауссовского распределенного канала
 	* @return - LLR */
-long double AwgnBpskChannel::get_llr(int & symb)
+long double AwgnBpskChannel::get_llr(double & symb)
 {
-	return (symb == 1 ? one_LLR_ : zero_LLR_);
+	return -2 * symb / sigma_2_;
+	//return (symb == 1 ? one_LLR_ : zero_LLR_);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -177,19 +178,4 @@ void AwgnBpskChannel::get_normalised_SINR(const int& n, const int& K)
 	norm_sinr_ = SINR_ * K / pow(2, n);     // нормализованна€ мощность сигнала сообщени€ R = K / N
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
-//‘ункции вывода
-void AwgnBpskChannel::print(std::vector<double>& vec)
-{
-	std::cout << std::endl;
-	for (int i = 0; i < vec.size(); i++) {
-		std::cout << vec[i] << ' ';
-	}
-	std::cout << std::endl;
-}
-
-void AwgnBpskChannel::print(double x)
-{
-	std::cout << std::endl << x << std::endl;
-}
+///////////////////////////////////////////////////////////////////////////////

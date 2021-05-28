@@ -9,7 +9,9 @@ public:
 	SCdecode(PolarCode& code);
 	~SCdecode();
 
-	std::vector<int> decode(std::vector<int>& message);
+	std::vector<int> decode(std::vector<double>& message);
+
+	double get_error(std::vector<int>& message, std::vector<int>& decode);
 
 private:
 	PolarCode code_;                                
@@ -22,11 +24,8 @@ private:
 	//–екурсивные отношени€ алгоритмов в пол€рном кодировании требуют, чтобы мы работали в log-domain, чтобы избежать ошибок переполнени€ в их реализаци€х.
 	std::vector<long double> llrs_;                 // вектор LLR
 
-	long double recursive_llr(int i, int N, std::vector<int> y, std::vector<int> u_est);
+	long double recursive_llr(int i, int N, std::vector<double> y, std::vector<int> u_est);
 	long double llr_check_node_operation(long double& llr_1, long double& llr_2);
-
-	void print(long double p);
-	void print(std::vector<int> vec);
 
 	int CHECK_TANH = 40;
 };
