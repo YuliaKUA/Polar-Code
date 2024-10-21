@@ -1,2 +1,2 @@
-# Working repository 
-The program is under development
+# Реализация кодировщика полярных кодов с ядром Е. Арикана и декодер последовательного исключения
+[Отчет к моей работе можно посмотреть тут](https://github.com/YuliaKUA/Polar-Code/blob/main/src/НИР.pdf)
